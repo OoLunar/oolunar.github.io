@@ -215,7 +215,7 @@
             projectsContainer.innerHTML = ""; // Clear the container
 
             return cacheFetch(`https://api.github.com/users/${username}/repos`)
-                .then(data => generateProjectHTML(data.filter(repo => !repo.fork && !repo.archived && !repo.disabled && repo.name != `${username.toLower()}.github.io`).sort((repo1, repo2) => repo2.stargazers_count === repo1.stargazers_count ? new Date(repo2.pushed_at) - new Date(repo1.pushed_at) : repo2.stargazers_count - repo1.stargazers_count), projectsContainer))
+                .then(data => generateProjectHTML(data.filter(repo => !repo.fork && !repo.archived && !repo.disabled && repo.name != `${username.toLowerCase()}.github.io`).sort((repo1, repo2) => repo2.stargazers_count === repo1.stargazers_count ? new Date(repo2.pushed_at) - new Date(repo1.pushed_at) : repo2.stargazers_count - repo1.stargazers_count), projectsContainer))
                 .catch(error => console.error("Error fetching data:", error));
         }
 
