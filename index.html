@@ -134,12 +134,13 @@
         function generateProjectHTML(data, container) {
             const readmeDiv = document.getElementById("description");
             readmeDiv.innerHTML = "";
+            readmeDiv.style.display = "none";
 
             const homepagesDiv = document.getElementById("homepages");
             homepagesDiv.innerHTML = "";
 
             for(const item of data) {
-                if(item.name == ".github" || item.name.toLowerCase() == item.owner.login.toLowerCase()) {
+                if((item.owner.type == "User" && item.name.toLowerCase() == item.owner.login.toLowerCase()) || (item.owner.type == "Organization" && item.name == ".github")) {
                     const readmeEndpoint = `https://api.github.com/repos/${item.full_name}/readme`;
                     cacheFetch(readmeEndpoint, {
                         "headers": {
