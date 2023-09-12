@@ -144,7 +144,7 @@ main {
     min-width: 100%;
     align-self: center;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min-content, 300px));
+    grid-template-columns: repeat(auto-fit, minmax(min-content, 350px));
 }
 
 .project-display {
@@ -152,7 +152,7 @@ main {
     display: grid;
     justify-content: space-evenly;
     justify-items: center;
-    margin: 2%;
+    margin: 5%;
     min-width: 200px;
     padding: 15px;
     text-align: center;
