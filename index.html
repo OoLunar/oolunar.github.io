@@ -30,6 +30,8 @@
         </header>
         <main class="w3-theme-d1" style="visibility: hidden;">
             <div id="tabs"></div>
+            <div class="homepages" id="homepages"></div>
+            <div class="w3-theme-l1 description" id="description"></div>
             <div class="display" id="project-display"></div>
             <h2>Community:</h2>
             <div class="display" id="community-display" style="justify-content: start;">
@@ -58,9 +60,14 @@
                                   <path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Zm0 2.445L6.615 5.5a.75.75 0 0 1-.564.41l-3.097.45 2.24 2.184a.75.75 0 0 1 .216.664l-.528 3.084 2.769-1.456a.75.75 0 0 1 .698 0l2.77 1.456-.53-3.084a.75.75 0 0 1 .216-.664l2.24-2.183-3.096-.45a.75.75 0 0 1-.564-.41L8 2.694Z"></path>
                               </svg>`;
 
+        const SVG_EXTERNAL_LINK = document.createElement("span");
+        SVG_EXTERNAL_LINK.innerHTML = `<svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-link-external">
+                                           <path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2Zm6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1Z"></path>
+                                       </svg>`;
+
         const projectsContainer = document.getElementById("project-display");
 
-        function cacheFetch(url) {
+        function cacheFetch(url, requestInfo = {}) {
             const cacheKey = `cache_${url}`;
             const cachedData = localStorage.getItem(cacheKey);
             if(cachedData) {
@@ -70,8 +77,14 @@
                 }
             }
 
-            return fetch(url)
-                .then(response => response.json())
+            return fetch(url, requestInfo)
+                .then(response => {
+                    if(response.headers.has("content-type") && response.headers.get("content-type").startsWith("application/json")) {
+                        return response.json();
+                    } else {
+                        return response.text();
+                    }
+                })
                 .then(data => {
                     localStorage.setItem(cacheKey, JSON.stringify({
                         timestamp: Date.now(),
@@ -119,7 +132,27 @@
         }
 
         function generateProjectHTML(data, container) {
+            const readmeDiv = document.getElementById("description");
+            readmeDiv.innerHTML = "";
+
+            const homepagesDiv = document.getElementById("homepages");
+            homepagesDiv.innerHTML = "";
+
             for(const item of data) {
+                if(item.name == ".github" || item.name.toLowerCase() == item.owner.login.toLowerCase()) {
+                    const readmeEndpoint = `https://api.github.com/repos/${item.full_name}/readme`;
+                    cacheFetch(readmeEndpoint, {
+                        "headers": {
+                            "accept": "application/vnd.github.html"
+                        }
+                    }).then(readme => {
+                        readmeDiv.innerHTML = readme;
+                        readmeDiv.style.display = "block";
+                    }).catch(error => console.error("Error fetching readme data:", error));
+
+                    continue;
+                }
+
                 const projectDiv = document.createElement("div");
                 projectDiv.title = item.name;
                 projectDiv.classList.add("w3-theme-l1");
@@ -144,22 +177,22 @@
                     "https://raw.githubusercontent.com/twitter/twemoji/master/assets/svg/2754.svg"
                 ];
 
-                const setNextImageSource = (index) => {
+                const setNextImageSource = (div, index) => {
                     if(index >= logoSources.length) {
-                        projectImage.onerror = null;
-                        projectImage.src = ""; // Set an empty source if all sources fail
-                        projectImage.title = "No Logo Available";
-                        projectImage.alt = "No Logo Available";
-                        projectImage.classList.add("missing-img");
+                        div.onerror = null;
+                        div.src = ""; // Set an empty source if all sources fail
+                        div.title = "No Logo Available";
+                        div.alt = "No Logo Available";
+                        div.classList.add("missing-img");
                         return;
                     }
 
                     const source = logoSources[index];
-                    projectImage.src = source;
-                    projectImage.onerror = () => setNextImageSource(index + 1);
+                    div.src = source;
+                    div.onerror = () => setNextImageSource(div, index + 1);
                 };
 
-                setNextImageSource(0);
+                setNextImageSource(projectImage, 0);
 
                 const projectMetadata = document.createElement("div");
                 projectMetadata.classList.add("project-metadata");
@@ -194,6 +227,28 @@
                 projectDiv.appendChild(projectDescription);
                 projectDiv.appendChild(projectImage);
 
+                if(item.homepage != undefined && item.homepage != null && item.homepage != "") {
+                    const homepageDiv = document.createElement("div");
+                    homepageDiv.classList.add("homepage");
+                    homepageDiv.classList.add("w3-theme-l1");
+                    homepageDiv.title = item.name;
+                    homepageDiv.addEventListener("click", () => window.open(item.homepage));
+
+                    const homepageImage = document.createElement("img");
+                    homepageImage.src = projectImage.src;
+                    homepageImage.alt = `${item.name}'s logo`;
+                    setNextImageSource(homepageImage, 0);
+
+                    const homepageTitle = document.createElement("h4");
+                    homepageTitle.textContent = item.name + " Docs";
+
+                    homepageDiv.appendChild(homepageImage);
+                    homepageDiv.appendChild(homepageTitle);
+                    homepageDiv.appendChild(SVG_EXTERNAL_LINK.firstChild.cloneNode(true));
+
+                    homepagesDiv.appendChild(homepageDiv);
+                }
+
                 twemoji.parse(projectDiv);
                 container.appendChild(projectDiv);
             }
@@ -212,7 +267,7 @@
         }
 
         function fetchData(username) {
-            projectsContainer.innerHTML = ""; // Clear the container
+            projectsContainer.innerHTML = "";
 
             return cacheFetch(`https://api.github.com/users/${username}/repos`)
                 .then(data => generateProjectHTML(data.filter(repo => !repo.fork && !repo.archived && !repo.disabled && repo.name != `${username.toLowerCase()}.github.io`).sort((repo1, repo2) => repo2.stargazers_count === repo1.stargazers_count ? new Date(repo2.pushed_at) - new Date(repo1.pushed_at) : repo2.stargazers_count - repo1.stargazers_count), projectsContainer))

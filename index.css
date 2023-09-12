@@ -6,11 +6,16 @@
 }
 
 /* Heading styles */
+h1,
 h2,
 h4,
 h5 {
     font-weight: 400;
     margin: 10px 0;
+}
+
+h1 {
+    font-size: 36px;
 }
 
 h2 {
@@ -21,8 +26,17 @@ h4 {
     font-size: 20px;
 }
 
-h5 {
+h5,
+p {
     font-size: 18px;
+}
+
+a {
+    color: #949fc7
+}
+
+a:visited {
+    color: #090f24
 }
 
 /* Layout */
@@ -62,6 +76,67 @@ main {
     height: 1.375em;
     vertical-align: -0.275em;
     width: 1.375em;
+}
+
+.homepages {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+}
+
+.homepage {
+    border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+    margin: 5px;
+    min-width: 200px;
+    padding: 15px;
+    text-align: center;
+}
+
+.homepage>h4 {
+    font-weight: bolder;
+    margin: 0;
+}
+
+.homepage>img {
+    border-radius: 5px;
+    height: 32px;
+    width: 32px;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.homepage>svg {
+    height: 32px;
+    width: 32px;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.homepage:hover {
+    background-color: #495683 !important;
+    cursor: pointer;
+}
+
+
+#description {
+    border-radius: 5px;
+    margin: 5px;
+    padding: 15px;
+    display: none;
+}
+
+#description svg {
+    display: inline-block;
+    height: 1.375em;
+    vertical-align: -0.275em;
+    width: 1.375em;
+    margin-left: 7.5px;
+    margin-right: 7.5px;
 }
 
 /* Display grid */
@@ -119,12 +194,14 @@ main {
     min-width: 65px;
     display: flex;
     flex-direction: row;
-    place-content: space-between;
+    justify-content: space-around;
 }
 
 .project-stats>svg {
-    height: 1.25rem;
-    width: 1.25rem;
+    display: inline-block;
+    height: 1.375em;
+    width: 1.375em;
+    vertical-align: -0.275em;
     margin-left: 7.5px;
 }
 
