@@ -62,13 +62,20 @@ header {
     text-align: center;
 }
 
+.main-container {
+    position: relative;
+    margin: 0 2.5em;
+}
+
 main {
     border-radius: 8px;
+    border-top-left-radius: 0px;
     display: flex;
     flex-direction: column;
-    margin: 0 2.5em;
     padding: 10px;
     align-items: center;
+    /* Space for tabs */
+    margin-top: 80px;
 }
 
 .emoji {
@@ -145,6 +152,7 @@ main {
     align-self: center;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min-content, 350px));
+    justify-content: center;
 }
 
 .project-display {
@@ -209,36 +217,43 @@ main {
 #tabs {
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
+    flex-wrap: nowrap;
+    position: absolute;
+    top: -55px;
+    /* Half of tab height to overlap main */
+    left: 0;
+    z-index: 1;
+    background-color: transparent;
+    border-top: 8px;
+    width: 100% - 10px;
 }
 
+/* Tab styles - enhanced appearance */
 .tab {
     align-items: center;
     background-color: #384163;
     border: 1px solid #181c2b;
-    border-radius: 4px;
+    border-radius: 8px 8px 0 0;
+    /* Only round top corners */
     cursor: pointer;
     display: flex;
     flex-direction: row-reverse;
     font-size: 16px;
-    margin-right: 10px;
-    margin-bottom: 5px;
-    padding: 10px;
-    width: fit-content;
-}
-
-.tab:last-child {
-    margin-right: 0;
-}
-
-.tab.active {
-    background-color: #495683;
-    border-bottom: 1px solid #495683;
+    margin-right: 5px;
+    padding: 10px 15px;
+    height: 40px;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
 }
 
 .tab:hover {
     background-color: #495683;
+    transform: translateY(-2px);
+}
+
+.tab.active {
+    background-color: #495683;
+    border-bottom: 2px solid #949fc7;
 }
 
 .tab img {
@@ -246,6 +261,7 @@ main {
     margin: 2px;
     margin-right: 4px;
     width: 32px;
+    border-radius: 4px;
 }
 
 /* Responsive styles */
