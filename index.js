@@ -122,7 +122,7 @@ const createBadges = (model) => {
 	}
 
 	if(model.isArchived) {
-		const archivedBadge = createElement('span', 'badge-fork', 'Archived');
+		const archivedBadge = createElement('span', 'badge-archived', 'Archived');
 		badges.appendChild(archivedBadge);
 	}
 
