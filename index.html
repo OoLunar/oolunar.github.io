@@ -1,53 +1,61 @@
 <!DOCTYPE html>
 
-<html lang="en-US">
-    <head>
-        <meta charset="UTF-8" />
-        <title>Forsaken Borders</title>
-        <meta content="Lunar Starstrum <lunar@forsaken-borders.net>" name="author" />
-        <meta content="Forsaken Borders" name="title" />
-        <meta content="Forsaken Borders, Home to projects done right." name="description" />
-        <meta content="Forsaken Borders, forb, forsaken, borders, forsaken-borders, forsaken website, forsaken borders website" name="keywords" />
-        <meta content="width=device-width,initial-scale=1" name="viewport" />
-        <meta content="58abbd4b9cbc0d1c765f15b11514f6c6" name="ocs-site-verification" />
-        <meta content="website" property="og:type" />
-        <meta content="https://forsaken-borders.net/" property="og:url" />
-        <meta content="Forsaken Borders" property="og:title" />
-        <meta content="Forsaken Borders, Home to projects done right." property="og:description" />
-        <meta content="https://forsaken-borders.net/res/Forsaken%20Borders%20Icon.png" property="og:image" />
-        <meta content="https://forsaken-borders.net/res/Forsaken%20Borders%20Icon.png" property="twitter:card" />
-        <meta content="https://forsaken-borders.net/" property="twitter:url" />
-        <meta content="Forsaken Borders" property="twitter:title" />
-        <meta content="Forsaken Borders, Home to projects done right." property="twitter:description" />
-        <meta content="https://forsaken-borders.net/res/Forsaken%20Borders%20Icon.png" property="twitter:image" />
-        <link href="https://forsaken-borders.net/res/Forsaken%20Borders%20Icon.png" rel="icon" type="image/png" />
-        <link rel="stylesheet" href="index.css" crossorigin="anonymous" />
-    </head>
-    <body class="w3-theme">
-        <header class="w3-theme-dark" id="header">
-            <h2>Lunar's Projects</h2>
-            <h4>I just really like reinventing the wheel.</h4>
-        </header>
-        <div class="main-container" style="visibility: hidden;">
-            <div id="tabs"></div>
-            <main class="w3-theme-d1">
-                <div class="w3-theme-l1 description" id="description"></div>
-                <div class="homepages" id="homepages"></div>
-                <div class="display" id="project-display"></div>
-                <h2>Community:</h2>
-                <div class="display" id="community-display" style="justify-content: start;">
-                    <div class="w3-theme-l1 project-display" onclick="window.open('https://www.patreon.com/OoLunar');">
-                        <h4>Patreon</h4>
-                        <h5>Wanna make a donation? Patreon is a good way to go.</h5><img src="https://forsaken-borders.net/res/Patreon.png" alt="Patreon Logo" title="Patreon" style="background-color: #ff424d;">
-                    </div>
-                    <div class="w3-theme-l1 project-display" onclick="window.open('https://discord.gg/Bsv7zSFygc');">
-                        <h4>Discord</h4>
-                        <h5>Join my Discord!</h5><img src="https://forsaken-borders.net/res/Discord.svg" alt="Discord Logo" title="Discord" style="background-color: #2c2f33;">
-                    </div>
-                </div>
-            </main>
-        </div>
-    </body>
-    <script src="https://unpkg.com/twemoji@latest/dist/twemoji.min.js" crossorigin="anonymous"></script>
-    <script src="index.js" type="module" crossorigin="anonymous"></script>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta content="width=device-width,initial-scale=1" name="viewport" />
+		<title>Lunar's Projects</title>
+		<meta content="Lunar's Projects" name="title" />
+		<meta content="I just really like reinventing the wheel." name="description" />
+		<meta content="Lunar Starstrum <lunar@forsaken-borders.net>" name="author" />
+		<meta content="Lunar's Projects, OoLunar, GitHub, GitHub projects, Lunar dev, open source projects, coding projects, software development, GitHub repositories, programming, Lunar's GitHub, developer portfolio, Lunar's work, GitHub profile, tech projects, Lunar's open source, coding portfolio, developer projects, OoLunar GitHub" name="keywords" />
+		<meta content="58abbd4b9cbc0d1c765f15b11514f6c6" name="ocs-site-verification" />
+
+		<meta content="Lunar's Projects" property="og:title" />
+		<meta content="I just really like reinventing the wheel." property="og:description" />
+		<meta content="website" property="og:type" />
+		<meta content="https://oolunar.forsaken-borders.net/" property="og:url" />
+		<meta content="https://oolunar.forsaken-borders.net/res/Forsaken%20Borders%20Icon.png" property="og:image" />
+
+		<meta content="Lunar's Projects" property="twitter:title" />
+		<meta content="I just really like reinventing the wheel." property="twitter:description" />
+		<meta content="https://oolunar.forsaken-borders.net/" property="twitter:url" />
+		<meta content="https://oolunar.forsaken-borders.net/res/Forsaken%20Borders%20Icon.png" property="twitter:image" />
+		<meta content="https://oolunar.forsaken-borders.net/res/Forsaken%20Borders%20Icon.png" property="twitter:card" />
+		<link href="https://oolunar.forsaken-borders.net/res/Forsaken%20Borders%20Icon.png" rel="icon" type="image/png" />
+		<link href="index.css" rel="stylesheet" crossorigin="anonymous" />
+		<!-- This cool website was made by the head of Anti-Lunar Club -->
+	</head>
+	<body>
+		<div class="container">
+			<div class="rounded container-dark main-header">
+				<h1>Lunar's Projects</h1>
+				<p>I just really like reinventing the wheel.</p>
+			</div>
+			<div class="rounded container-dark orgs-container" id="orgsContainer" style="display:none">
+				<div class="orgs-title">Organizations</div>
+				<div class="orgs-list" id="orgsList"></div>
+				<br>
+				<div class="orgs-title">Documentation Links</div>
+				<div class="orgs-list" id="docsList"></div>
+			</div>
+			<div id="loading"></div>
+			<div class="rounded container-light org-info" id="readme" style="display:none"></div>
+			<div class="repos-list" id="repoList" style="display:none">
+				<!--div class="repo rounded">
+					<h4><span class="repo-title-org">OoLunar</span><span>/</span><span>RepoName</span></h4>
+					<div><span>Language</span><span class="bull"></span><span>StarCount</span><span title="Stars"><svg class="fi"><use href="feather-sprite.svg#star"/></svg></span><span class="bull"></span><span>ForkCount</span><span title="Forks"><svg class="fi"><use href="feather-sprite.svg#git-branch"/></svg></span></div>
+					<p>RepoSum</p>
+				</div>
+				<div class="repo rounded">
+					<h4><span class="repo-title-org">OoLunar</span><span>/</span><span>RepoName</span></h4>
+					<span class="badge-fork">Fork</span>
+					<div><span>Language</span><span class="bull"></span><span>StarCount</span><span title="Stars"><svg class="fi"><use href="feather-sprite.svg#star"/></svg></span><span class="bull"></span><span>ForkCount</span><span title="Forks"><svg class="fi"><use href="feather-sprite.svg#git-branch"/></svg></span></div>
+					<p>RepoSum</p>
+				</div-->
+			</div>
+		</div>
+		<script crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/@twemoji/api@latest/dist/twemoji.min.js"></script>
+		<script crossorigin="anonymous" src="index.js" type="module"></script>
+	</body>
 </html>
