@@ -114,7 +114,20 @@ const createRepoStats = (model) => {
 	return statsElement;
 };
 
-const createForkBadge = () => createElement('span', 'badge-fork', 'Fork');
+const createBadges = (model) => {
+	const badges = createElement('div', 'badges');
+	if(model.isFork) {
+		const forkBadge = createElement('span', 'badge-fork', 'Fork');
+		badges.appendChild(forkBadge);
+	}
+
+	if(model.isArchived) {
+		const archivedBadge = createElement('span', 'badge-fork', 'Archived');
+		badges.appendChild(archivedBadge);
+	}
+
+	return badges;
+};
 
 const createDescription = (model) => createElement('p', null, model.description);
 
@@ -191,11 +204,7 @@ const createRepo = (model) => {
 
 	repoElement.appendChild(createRepoTitle(model));
 	repoElement.appendChild(createRepoStats(model));
-
-	if(model.isFork === true) {
-		repoElement.appendChild(createForkBadge());
-	}
-
+	repoElement.appendChild(createBadges(model));
 	repoElement.appendChild(createDescription(model));
 	twemoji.parse(repoElement);
 	return repoElement;
@@ -275,6 +284,7 @@ const loadRepositories = (name, type) => {
 				forks: repo.forks_count,
 				description: repo.description,
 				isFork: repo.fork,
+				isArchived: repo.archived,
 				separateOrgName: type !== "user",
 				defaultBranch: repo.default_branch,
 				homepage: repo.homepage,

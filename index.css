@@ -229,12 +229,19 @@ span>svg {
 	width: 48px;
 }
 
+.repo>.badges {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	gap: 8px;
+	margin-top: 8px;
+}
+
 .badge-fork {
 	background-color: hsl(23, 100%, 50%);
 	padding: 2px 12px;
 	display: block;
 	width: max-content;
-	margin: 8px auto 16px;
 	border-radius: 16px;
 }
 
