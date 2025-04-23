@@ -185,6 +185,9 @@ const createRepo = (model) => {
 
 	const repoElement = createElement('div', 'repo rounded');
 	repoElement.dataset.githubId = model.fullName;
+	repoElement.onclick = () => {
+		window.open(`https://github.com/${model.fullName}`, "_blank");
+	};
 
 	repoElement.appendChild(createRepoTitle(model));
 	repoElement.appendChild(createRepoStats(model));

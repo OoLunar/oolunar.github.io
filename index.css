@@ -187,6 +187,12 @@ span>svg {
 	align-items: center;
 }
 
+.repo:hover {
+	background-color: hsl(227, 28%, 40%);
+	transition: background-color 0.1s;
+	cursor: pointer;
+}
+
 .repo>h4 {
 	word-wrap: break-word;
 	text-align: center;
