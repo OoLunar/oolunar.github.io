@@ -75,6 +75,10 @@ img.emoji {
 	overflow: visible;
 }
 
+#docsList>.org {
+	justify-content: center;
+}
+
 .org>img {
 	width: 48px;
 	height: 48px;
